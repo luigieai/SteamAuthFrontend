@@ -20,7 +20,15 @@ const RouterStack = createBrowserRouter(
           }
         }}
       />
-
+      <Route
+        path="/login"
+        lazy={async () => {
+          const { LoginPage } = await import('@/pages/Login')
+          return {
+            Component: LoginPage,
+          }
+        }}
+      />
       <Route
         path="*"
         lazy={async () => {

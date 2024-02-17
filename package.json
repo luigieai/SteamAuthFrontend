@@ -52,8 +52,10 @@
     "@tanstack/react-query": "^5.x",
     "@tanstack/react-query-devtools": "^5.x",
     "axios": "^1.x",
+    "oidc-client-ts": "^3.0.1",
     "react": "^18.x",
     "react-dom": "^18.x",
+    "react-oidc-context": "^3.0.0",
     "react-router-dom": "^6.x",
     "zustand": "^4.x"
   },
