@@ -5,16 +5,18 @@ import { useNavigate } from 'react-router-dom'
 import { Button, Center, Flex, Image } from '@mantine/core'
 
 import { empresa } from '@/assets'
+import { useAuthenticatedUser } from '@/hooks'
 
 const LoginPage = () => {
+  const isAuthenticated = useAuthenticatedUser()
   const auth = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!auth.isLoading && auth.isAuthenticated) {
+    if (isAuthenticated) {
       navigate('/')
     }
-  }, [auth, navigate])
+  }, [auth, navigate, isAuthenticated])
 
   return (
     <Center maw="100%" h="100vh" bg="var(--mantine-color-gray-light)">

@@ -1,16 +1,26 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { useAuth } from 'react-oidc-context'
 import { useNavigate } from 'react-router-dom'
 
 import { Anchor, Box, Button, Container, Flex, Image, Text, Title } from '@mantine/core'
 
 import { ReactLogo } from '@/assets'
+import { useAuthenticatedUser } from '@/hooks'
 
 import classes from './Home.module.css'
 
 const Home: FC = (): JSX.Element => {
   const [count, setCount] = useState(0)
 
+  const isAuthenticated = useAuthenticatedUser()
+  const auth = useAuth()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login')
+    }
+  }, [auth, navigate, isAuthenticated])
 
   return (
     <Container
@@ -37,11 +47,16 @@ const Home: FC = (): JSX.Element => {
         </Flex>
 
         <Title order={1}>Vite + React/TS = EruptionJS</Title>
+        <Text fz="md" lh="sm">
+          Usuario: {auth.user?.profile.given_name}
+        </Text>
 
         <Box py="md">
-          <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
+          <Flex direction="row" justify={'space-around'} gap={'md'}>
+            <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
+            <Button onClick={() => auth.signoutRedirect()}>Logout</Button>
+          </Flex>
         </Box>
-
         <Box>
           <Text ta="center" p="sm">
             Edit <code>src/App.tsx</code> and save to test HMR
