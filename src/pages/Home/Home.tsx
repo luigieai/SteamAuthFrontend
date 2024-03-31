@@ -1,17 +1,21 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { useAuth } from 'react-oidc-context'
 import { useNavigate } from 'react-router-dom'
 
-import { Anchor, Box, Button, Container, Flex, Image, Text, Title } from '@mantine/core'
+import { Container, Table, Title } from '@mantine/core'
 
-import { ReactLogo } from '@/assets'
 import { useAuthenticatedUser } from '@/hooks'
+import { Layout } from '@/pages/Layout'
 
-import classes from './Home.module.css'
+const accounts = [
+  { primeiro: 'Ai ai Ai', segundo: '666', terceiro: 'A', quarto: 'Carbon' },
+  { primeiro: 'Ei ei ei', segundo: '366', terceiro: 'B', quarto: 'Glass' },
+  { primeiro: 'Ii ii ii', segundo: '636', terceiro: 'C', quarto: 'Wood' },
+  { primeiro: 'Oi oi oi', segundo: '663', terceiro: 'D', quarto: 'Stone' },
+  { primeiro: 'Ui ui ui', segundo: '363', terceiro: 'E', quarto: 'Brick' },
+]
 
 const Home: FC = (): JSX.Element => {
-  const [count, setCount] = useState(0)
-
   const isAuthenticated = useAuthenticatedUser()
   const auth = useAuth()
   const navigate = useNavigate()
@@ -22,56 +26,31 @@ const Home: FC = (): JSX.Element => {
     }
   }, [auth, navigate, isAuthenticated])
 
+  const rows = accounts.map((account) => (
+    <Table.Tr key={account.primeiro}>
+      <Table.Td>{account.primeiro}</Table.Td>
+      <Table.Td>{account.segundo}</Table.Td>
+      <Table.Td>{account.terceiro}</Table.Td>
+      <Table.Td>{account.quarto}</Table.Td>
+    </Table.Tr>
+  ))
   return (
-    <Container
-      fluid
-      style={{
-        height: '100vh',
-        color: '#ddd',
-        backgroundColor: '#242424',
-      }}
-    >
-      <Flex display="flex" direction="column" justify="center" align="center" h="100%" gap="lg">
-        <Flex direction="row" justify="space-around" align="center">
-          <Anchor href="https://vitejs.dev" target="_blank" rel="noreferrer">
-            <Image src="/icons/favicon.svg" className={classes.logo} alt="Vite logo" />
-          </Anchor>
-
-          <Anchor href="https://reactjs.org" target="_blank" rel="noreferrer">
-            <ReactLogo />
-          </Anchor>
-
-          <Anchor href="https://eruptionjs.dev" target="_blank" rel="noreferrer" underline="never">
-            <Text size="60px">🌋</Text>
-          </Anchor>
-        </Flex>
-
-        <Title order={1}>Vite + React/TS = EruptionJS</Title>
-        <Text fz="md" lh="sm">
-          Usuario: {auth.user?.profile.given_name}
-        </Text>
-
-        <Box py="md">
-          <Flex direction="row" justify={'space-around'} gap={'md'}>
-            <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
-            <Button onClick={() => auth.signoutRedirect()}>Logout</Button>
-          </Flex>
-        </Box>
-        <Box>
-          <Text ta="center" p="sm">
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </Text>
-
-          <Text ta="center" p="sm">
-            Click on the Vite, React and Eruption logos to learn more.
-          </Text>
-        </Box>
-
-        <Box>
-          <Anchor onClick={() => navigate('/notfound')}>Not Found Page</Anchor>
-        </Box>
-      </Flex>
-    </Container>
+    <Layout>
+      <Container fluid>
+        <Title mb={'lg'}>Accounts</Title>
+        <Table>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Primeiro</Table.Th>
+              <Table.Th>Segundo</Table.Th>
+              <Table.Th>Terceiro</Table.Th>
+              <Table.Th>Quarto</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+      </Container>
+    </Layout>
   )
 }
 

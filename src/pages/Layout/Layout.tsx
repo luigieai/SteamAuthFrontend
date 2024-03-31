@@ -1,8 +1,10 @@
-import { AppShell, Burger, NavLink } from '@mantine/core'
+import { JSX } from 'react'
+
+import { AppShell, Burger, Group, NavLink } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconLogout } from '@tabler/icons-react'
 
-const Layout = () => {
+const Layout = (props: { children: JSX.Element }): JSX.Element => {
   const [opened, { toggle }] = useDisclosure()
 
   return (
@@ -16,8 +18,10 @@ const Layout = () => {
       padding={'md'}
     >
       <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size={'sm'} />
-        <div>Logo</div>
+        <Group h="100%" px={'md'}>
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size={'sm'} />
+          <div>Logo</div>
+        </Group>
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
@@ -29,7 +33,7 @@ const Layout = () => {
         />
       </AppShell.Navbar>
 
-      <AppShell.Main>Main</AppShell.Main>
+      <AppShell.Main>{props.children || <div>Cu</div>}</AppShell.Main>
     </AppShell>
   )
 }

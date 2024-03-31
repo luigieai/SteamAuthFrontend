@@ -11,7 +11,11 @@ type ThemeProviderProps = {
 }
 
 const ThemeProvider: FC<ThemeProviderProps> = ({ children }): JSX.Element => {
-  return <MantineProvider theme={theme}>{children}</MantineProvider>
+  return (
+    <MantineProvider theme={theme} defaultColorScheme="dark">
+      {children}
+    </MantineProvider>
+  )
 }
 
 export { ThemeProvider }
