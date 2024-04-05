@@ -1,5 +1,7 @@
 import axios, { type AxiosError, type AxiosInstance, AxiosRequestConfig } from 'axios'
 
+import { AuthUser } from '@/hooks'
+
 type RequestUrl = string
 type RequestBody = unknown
 type RequestParams = Omit<AxiosRequestConfig, `baseURL` | `url` | `method`>
@@ -7,7 +9,7 @@ type RequestResponse = unknown
 
 // axios instance
 const axiosInstance: AxiosInstance = axios.create({
-  // baseURL: ,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -16,8 +18,8 @@ const axiosInstance: AxiosInstance = axios.create({
 // interceptor - REQUEST
 axiosInstance.interceptors.request.use(
   (req) => {
-    // your interceptors logic here to put tokens on protected routes
-
+    const token = AuthUser()?.access_token
+    req.headers.set('Authorization', `Bearer ${token}`)
     return req
   },
   (error) => {

@@ -1,4 +1,5 @@
 import {
+  AuthProvider,
   ErrorBoundaryProvider,
   NotificationProvider,
   QueryProvider,
@@ -12,7 +13,9 @@ const App = () => {
       <ThemeProvider>
         <NotificationProvider>
           <QueryProvider>
-            <Routes />
+            <AuthProvider>
+              <Routes />
+            </AuthProvider>
           </QueryProvider>
         </NotificationProvider>
       </ThemeProvider>

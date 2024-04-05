@@ -14,13 +14,25 @@ const RouterStack = createBrowserRouter(
       <Route
         path="/"
         lazy={async () => {
-          const { Home } = await import('@/pages/Home')
-          //const { Layout } = await import('@/pages/Layout')
+          //const { Home } = await import('@/pages/Home')
+          const { Layout } = await import('@/pages/Layout')
           return {
-            Component: Home,
+            Component: Layout,
           }
         }}
-      />
+      >
+        <Route
+          index
+          lazy={async () => {
+            const { Home } = await import('@/pages/Home')
+            //const { Layout } = await import('@/pages/Layout')
+            return {
+              Component: Home,
+            }
+          }}
+        />
+      </Route>
+
       <Route
         path="/login"
         lazy={async () => {
@@ -30,6 +42,7 @@ const RouterStack = createBrowserRouter(
           }
         }}
       />
+
       <Route
         path="*"
         lazy={async () => {

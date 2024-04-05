@@ -1,3 +1,4 @@
+export * from './AuthProvider'
 export * from './ErrorBoundaryProvider'
 export * from './NotificationProvider'
 export * from './QueryProvider'
