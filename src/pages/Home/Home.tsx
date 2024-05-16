@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Container, Table, Title } from '@mantine/core'
 
+import { Spinner } from '@/components'
 import { useGetAllAccounts } from '@/services/SteamAccount/steamservice'
 
 const Home: FC = (): JSX.Element => {
@@ -10,7 +11,11 @@ const Home: FC = (): JSX.Element => {
   const { data, isPending, error } = useGetAllAccounts()
 
   if (isPending) {
-    return <div>Bota um loading aqui imbecil</div>
+    return (
+      <div>
+        <Spinner />
+      </div>
+    )
   }
 
   if (error) {
