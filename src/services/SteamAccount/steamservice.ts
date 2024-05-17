@@ -16,10 +16,24 @@ const getAllAccounts = async () => {
   return await get<SteamAccountsAllDto>(url).then(({ data }) => data)
 }
 
+const getTotpCode = async (accountName: string) => {
+  const url = `SteamAccounts/${accountName}/code`
+
+  return await get<string>(url).then(({ data }) => data)
+}
+
 const useGetAllAccounts = () => {
   return useQuery({
     queryKey: ['fetchBuilds'],
     queryFn: async () => getAllAccounts(),
+  })
+}
+
+const useGetTotpCode = (accountName: string, enabled = true) => {
+  return useQuery({
+    queryKey: ['fetchTotp', accountName],
+    queryFn: async () => getTotpCode(accountName),
+    enabled: enabled,
   })
 }
 
@@ -30,4 +44,4 @@ const useGetAllAccounts = () => {
 //   })
 // }
 
-export { useGetAllAccounts }
+export { useGetAllAccounts, useGetTotpCode }

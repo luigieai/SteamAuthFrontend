@@ -32,7 +32,12 @@ const Home: FC = (): JSX.Element => {
       <Table.Td>{account.id}</Table.Td>
       <Table.Td>{account.accountName}</Table.Td>
       <Table.Td>
-        <ButtonCopyCode variant="filled" size="compact-sm" radius="md" />
+        <ButtonCopyCode
+          username={account.accountName}
+          variant="filled"
+          size="compact-sm"
+          radius="md"
+        />
       </Table.Td>
       <Table.Td>
         <Button rightSection={<IconEye size={18} />} variant="filled" size="compact-sm" radius="md">
